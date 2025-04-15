@@ -1,39 +1,38 @@
 server:
-  port: 8081
-
+  port: 8101
 spring:
-  cloud:
-    discovery: enabled
-    loadbalancer: enabled
   application:
     name: employee-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        eureka:
+          enabled: true
+  security:
+    user:
+      name: user
+      password: password
   datasource:
     url: jdbc:h2:mem:employeedb
     driver-class-name: org.h2.Driver
     username: sa
     password:
-  h2:
-    console:
-      enabled: true
-  jpa:
-    database-platform:
-      org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    platform: h2
+  config:
+    import: configserver:http://localhost:8888
 
 eureka:
   client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
-  instance:
-    prefer-ip-address: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
 
-resilience4j:
-  circuitbreaker:
-    instances:
-      paymentService:
-        slidingWindowSize: 5
-        failureRateThreshold: 50
-        waitDurationInOpenState: 5000ms
-        permittedNumberOfCallsInHalfOpenState: 2
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org.springframework: INFO
+    com.example: DEBUG
