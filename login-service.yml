@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 8081
 
 spring:
   application:
@@ -14,11 +14,15 @@ spring:
       name: user
       password: password
   datasource:
-    url: jdbc:h2:mem:logindb
+    url: jdbc:h2:mem:login_db
     driverClassName: org.h2.Driver
     username: sa
-    password:
-    platform: h2
+    password: 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
   config:
     import: configserver:http://localhost:8888
 
