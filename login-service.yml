@@ -52,3 +52,9 @@ resilience4j.circuitbreaker:
       slidingWindowSize: 10
       failureThresholdRate: 50
       waitDurationInOpenState: 10000
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
